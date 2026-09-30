@@ -5,14 +5,10 @@ jobs:
   print-job:
     runs-on: windows-latest
     env:
-      OS_TYPE: ${{ runner.os }}
       EVENT_NAME: ${{ github.event_name }}
       BRANCH_NAME: ${{ github.ref_name }}
       REPO_NAME: ${{ github.repository }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-
       - name: Print messages in PowerShell
         run: |
           Write-Output "Hello from PowerShell!"
@@ -20,6 +16,8 @@ jobs:
           echo "echo works as an alias for Write-Output in PowerShell"
 
       - name: Print OS runner type
+        env:
+          OS_TYPE: ${{ runner.os }}
         run: |
           Write-Output "Runner OS: $env:OS_TYPE"
 
@@ -36,6 +34,8 @@ jobs:
           Write-Output "Repository: $env:REPO_NAME"
 
       - name: Print combined metadata (interpolated)
+        env:
+          OS_TYPE: ${{ runner.os }}
         run: |
           Write-Output "Run by ${{ github.actor }} on $env:OS_TYPE via $env:EVENT_NAME event, branch $env:BRANCH_NAME, repo $env:REPO_NAME"
 
