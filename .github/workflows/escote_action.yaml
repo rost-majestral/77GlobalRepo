@@ -4,10 +4,12 @@ on: [push]
 jobs:
   print-job:
     runs-on: windows-latest
+    env:
+      OS_TYPE: ${{ runner.os }}
+      EVENT_NAME: ${{ github.event_name }}
+      BRANCH_NAME: ${{ github.ref_name }}
+      REPO_NAME: ${{ github.repository }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Print messages in PowerShell
         run: |
           Write-Output "Hello from PowerShell!"
@@ -16,19 +18,23 @@ jobs:
 
       - name: Print OS runner type
         run: |
-          Write-Output "Runner OS: ${{ runner.os }}"
+          Write-Output "Runner OS: $env:OS_TYPE"
 
       - name: Print triggering event name
         run: |
-          Write-Output "Event: ${{ github.event_name }}"
+          Write-Output "Event: $env:EVENT_NAME"
 
       - name: Print branch name
         run: |
-          Write-Output "Branch: ${{ github.ref_name }}"
+          Write-Output "Branch: $env:BRANCH_NAME"
 
       - name: Print repository name
         run: |
-          Write-Output "Repository: ${{ github.repository }}"
+          Write-Output "Repository: $env:REPO_NAME"
+
+      - name: Print combined metadata (interpolated)
+        run: |
+          Write-Output "Run by ${{ github.actor }} on $env:OS_TYPE via $env:EVENT_NAME event, branch $env:BRANCH_NAME, repo $env:REPO_NAME"
 
       - name: List files in workspace
         run: |
