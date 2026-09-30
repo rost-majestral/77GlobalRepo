@@ -15,16 +15,21 @@ jobs:
           echo "echo works as an alias for Write-Output in PowerShell"
 
       - name: Print OS runner type
-        run: Write-Output "Runner OS: ${{ runner.os }}"
+        run: |
+          Write-Output "Runner OS: ${{ runner.os }}"
 
       - name: Print triggering event name
-        run: Write-Output "Event: ${{ github.event_name }}"
+        run: |
+          Write-Output "Event: ${{ github.event_name }}"
 
       - name: Print branch name
-        run: Write-Output "Branch: ${{ github.ref_name }}"
+        run: |
+          Write-Output "Branch: ${{ github.ref_name }}"
 
       - name: Print repository name
-        run: Write-Output "Repository: ${{ github.repository }}"
+        run: |
+          Write-Output "Repository: ${{ github.repository }}"
 
       - name: List files in workspace
-        run: Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse | Select-Object -ExpandProperty FullName
+        run: |
+          Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse | Select-Object -ExpandProperty FullName
